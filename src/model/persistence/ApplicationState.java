@@ -1,15 +1,15 @@
 package model.persistence;
 
-import model.ShapeColor;
-import model.ShapeShadingType;
-import model.ShapeType;
-import model.StartAndEndPointMode;
+import model.*;
 import model.dialogs.DialogProvider;
 import model.interfaces.IApplicationState;
 import model.interfaces.IDialogProvider;
+import model.interfaces.IShape;
 import view.interfaces.IUiModule;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ApplicationState implements IApplicationState, Serializable {
     private static final long serialVersionUID = -5545483996576839007L;
@@ -21,6 +21,9 @@ public class ApplicationState implements IApplicationState, Serializable {
     private ShapeColor activeSecondaryColor;
     private ShapeShadingType activeShapeShadingType;
     private StartAndEndPointMode activeStartAndEndPointMode;
+    private Point startingCoordinatePoint;
+    private Point endingCoordinatePoint;
+    private List<IShape> shapeList;
 
     public ApplicationState(IUiModule uiModule) {
         this.uiModule = uiModule;
@@ -54,6 +57,32 @@ public class ApplicationState implements IApplicationState, Serializable {
     }
 
     @Override
+    public void setStartingCoordinatePoint(Point startingPoint) {
+        this.startingCoordinatePoint = startingPoint;
+    }
+
+    @Override
+    public void setEndingCoordinatePoint(Point endingPoint) {
+        this.endingCoordinatePoint = endingPoint;
+    }
+
+    @Override
+    public void resetCurrentCoordinates() {
+        this.startingCoordinatePoint = null;
+        this.endingCoordinatePoint = null;
+    }
+
+    @Override
+    public void addShape(IShape shape) {
+        this.shapeList.add(shape);
+    }
+
+    @Override
+    public void deleteShape(IShape shape) {
+        this.shapeList.remove(shape);
+    }
+
+    @Override
     public ShapeType getActiveShapeType() {
         return activeShapeType;
     }
@@ -78,11 +107,21 @@ public class ApplicationState implements IApplicationState, Serializable {
         return activeStartAndEndPointMode;
     }
 
+    @Override
+    public Point getStartingCoordinatePoint() { return this.startingCoordinatePoint; }
+
+    @Override
+    public Point getEndingCoordinatePoint() { return this.endingCoordinatePoint; }
+
+    @Override
+    public List<IShape> getShapeList() { return this.shapeList; }
+
     private void setDefaults() {
         activeShapeType = ShapeType.ELLIPSE;
         activePrimaryColor = ShapeColor.BLUE;
         activeSecondaryColor = ShapeColor.GREEN;
         activeShapeShadingType = ShapeShadingType.FILLED_IN;
         activeStartAndEndPointMode = StartAndEndPointMode.DRAW;
+        this.shapeList = new ArrayList<>();
     }
 }

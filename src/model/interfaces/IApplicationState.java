@@ -1,9 +1,8 @@
 package model.interfaces;
 
-import model.ShapeColor;
-import model.ShapeShadingType;
-import model.ShapeType;
-import model.StartAndEndPointMode;
+import model.*;
+
+import java.util.List;
 
 public interface IApplicationState {
     void setActiveShape();
@@ -16,6 +15,16 @@ public interface IApplicationState {
 
     void setActiveStartAndEndPointMode();
 
+    void setStartingCoordinatePoint(Point startingPoint);
+
+    void setEndingCoordinatePoint(Point endingCoordinatePoint);
+
+    void resetCurrentCoordinates();
+
+    void addShape(IShape shape);
+
+    void deleteShape(IShape shape);
+
     ShapeType getActiveShapeType();
 
     ShapeColor getActivePrimaryColor();
@@ -25,4 +34,10 @@ public interface IApplicationState {
     ShapeShadingType getActiveShapeShadingType();
 
     StartAndEndPointMode getActiveStartAndEndPointMode();
+
+    Point getStartingCoordinatePoint();
+
+    Point getEndingCoordinatePoint();
+
+    List<IShape> getShapeList();
 }
