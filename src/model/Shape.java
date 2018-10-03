@@ -1,6 +1,9 @@
 package model;
 
 import model.interfaces.IShape;
+import view.gui.PaintCanvas;
+
+import java.awt.*;
 
 public class Shape implements IShape {
     private final ShapeType shapeType;
@@ -41,5 +44,12 @@ public class Shape implements IShape {
 
     public Point getEndingCoordinate() {
         return this.endingPoint;
+    }
+
+    public void draw(PaintCanvas canvas) {
+        Graphics2D graphics2d = canvas.getGraphics2D();
+        graphics2d.drawRect(this.getStartingCoordinate().getX(), this.getStartingCoordinate().getY(),
+                this.getEndingCoordinate().getX() - this.getStartingCoordinate().getX(),
+                this.getEndingCoordinate().getY() - this.getStartingCoordinate().getY());
     }
 }

@@ -1,8 +1,7 @@
 package model.interfaces;
 
 import model.*;
-
-import java.util.List;
+import view.gui.PaintCanvas;
 
 public interface IApplicationState {
     void setActiveShape();
@@ -21,9 +20,7 @@ public interface IApplicationState {
 
     void resetCurrentCoordinates();
 
-    void addShape(IShape shape);
-
-    void deleteShape(IShape shape);
+    PaintCanvas getPaintCanvas();
 
     ShapeType getActiveShapeType();
 
@@ -39,5 +36,5 @@ public interface IApplicationState {
 
     Point getEndingCoordinatePoint();
 
-    List<IShape> getShapeList();
+    IShapeList getShapeList();
 }

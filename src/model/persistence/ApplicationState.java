@@ -4,17 +4,17 @@ import model.*;
 import model.dialogs.DialogProvider;
 import model.interfaces.IApplicationState;
 import model.interfaces.IDialogProvider;
-import model.interfaces.IShape;
+import model.interfaces.IShapeList;
+import view.gui.PaintCanvas;
 import view.interfaces.IUiModule;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ApplicationState implements IApplicationState, Serializable {
     private static final long serialVersionUID = -5545483996576839007L;
     private final IUiModule uiModule;
     private final IDialogProvider dialogProvider;
+    private final PaintCanvas canvas;
 
     private ShapeType activeShapeType;
     private ShapeColor activePrimaryColor;
@@ -23,11 +23,12 @@ public class ApplicationState implements IApplicationState, Serializable {
     private StartAndEndPointMode activeStartAndEndPointMode;
     private Point startingCoordinatePoint;
     private Point endingCoordinatePoint;
-    private List<IShape> shapeList;
+    private IShapeList shapeList;
 
-    public ApplicationState(IUiModule uiModule) {
+    public ApplicationState(IUiModule uiModule, PaintCanvas canvas) {
         this.uiModule = uiModule;
         this.dialogProvider = new DialogProvider(this);
+        this.canvas = canvas;
         setDefaults();
     }
 
@@ -73,14 +74,7 @@ public class ApplicationState implements IApplicationState, Serializable {
     }
 
     @Override
-    public void addShape(IShape shape) {
-        this.shapeList.add(shape);
-    }
-
-    @Override
-    public void deleteShape(IShape shape) {
-        this.shapeList.remove(shape);
-    }
+    public PaintCanvas getPaintCanvas() { return this.canvas; }
 
     @Override
     public ShapeType getActiveShapeType() {
@@ -114,7 +108,7 @@ public class ApplicationState implements IApplicationState, Serializable {
     public Point getEndingCoordinatePoint() { return this.endingCoordinatePoint; }
 
     @Override
-    public List<IShape> getShapeList() { return this.shapeList; }
+    public IShapeList getShapeList() { return this.shapeList; }
 
     private void setDefaults() {
         activeShapeType = ShapeType.ELLIPSE;
@@ -122,6 +116,6 @@ public class ApplicationState implements IApplicationState, Serializable {
         activeSecondaryColor = ShapeColor.GREEN;
         activeShapeShadingType = ShapeShadingType.FILLED_IN;
         activeStartAndEndPointMode = StartAndEndPointMode.DRAW;
-        this.shapeList = new ArrayList<>();
+        this.shapeList = new ShapeList(new DrawShapeHandler(this));
     }
 }

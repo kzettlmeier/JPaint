@@ -4,6 +4,7 @@ import model.Point;
 import model.ShapeColor;
 import model.ShapeShadingType;
 import model.ShapeType;
+import view.gui.PaintCanvas;
 
 public interface IShape {
     ShapeType getShapeType();
@@ -12,4 +13,5 @@ public interface IShape {
     ShapeShadingType getShadingType();
     Point getStartingCoordinate();
     Point getEndingCoordinate();
+    void draw(PaintCanvas canvas);
 }

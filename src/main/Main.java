@@ -2,8 +2,6 @@ package main;
 
 import controller.IJPaintController;
 import controller.JPaintController;
-import model.dialogs.DialogProvider;
-import model.interfaces.IDialogProvider;
 import model.persistence.ApplicationState;
 import view.gui.Gui;
 import view.gui.GuiWindow;
@@ -12,17 +10,14 @@ import view.gui.PaintCanvas;
 import view.interfaces.IGuiWindow;
 import view.interfaces.IUiModule;
 
-import java.awt.*;
-import java.awt.event.KeyAdapter;
-
 public class Main {
     public static void main(String[] args){
         PaintCanvas paintCanvas = new PaintCanvas();
         IGuiWindow guiWindow = new GuiWindow(paintCanvas);
         IUiModule uiModule = new Gui(guiWindow);
-        ApplicationState appState = new ApplicationState(uiModule);
-        IJPaintController controller = new JPaintController(uiModule, appState, paintCanvas);
-        paintCanvas.addMouseListener(new MouseEventListener(controller));
+        ApplicationState appState = new ApplicationState(uiModule, paintCanvas);
+        IJPaintController controller = new JPaintController(uiModule, appState);
+        paintCanvas.addMouseListener(new MouseEventListener(appState));
         controller.setup();
 
         // For example purposes only; remove from your final project.
