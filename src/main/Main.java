@@ -2,6 +2,10 @@ package main;
 
 import controller.IJPaintController;
 import controller.JPaintController;
+import model.DrawShapeHandler;
+import model.ShapeList;
+import model.interfaces.IDrawShapeHandler;
+import model.interfaces.IShapeList;
 import model.persistence.ApplicationState;
 import view.gui.Gui;
 import view.gui.GuiWindow;
@@ -15,9 +19,11 @@ public class Main {
         PaintCanvas paintCanvas = new PaintCanvas();
         IGuiWindow guiWindow = new GuiWindow(paintCanvas);
         IUiModule uiModule = new Gui(guiWindow);
-        ApplicationState appState = new ApplicationState(uiModule, paintCanvas);
+        ApplicationState appState = new ApplicationState(uiModule);
         IJPaintController controller = new JPaintController(uiModule, appState);
-        paintCanvas.addMouseListener(new MouseEventListener(appState));
+        IDrawShapeHandler drawShapeHandler = new DrawShapeHandler(paintCanvas);
+        IShapeList shapeList = new ShapeList(drawShapeHandler);
+        paintCanvas.addMouseListener(new MouseEventListener(appState, shapeList));
         controller.setup();
 
         // For example purposes only; remove from your final project.

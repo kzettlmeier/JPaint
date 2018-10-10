@@ -1,5 +1,5 @@
 package model.interfaces;
 
 public interface IDrawShapeHandler {
-    void update();
+    void update(IShapeList shapeList);
 }

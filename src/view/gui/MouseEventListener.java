@@ -3,15 +3,18 @@ package view.gui;
 import command.CreateShapeCommand;
 import model.Point;
 import model.interfaces.IApplicationState;
+import model.interfaces.IShapeList;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class MouseEventListener implements MouseListener {
     private final IApplicationState applicationState;
+    private final IShapeList shapeList;
 
-    public MouseEventListener(IApplicationState applicationState) {
+    public MouseEventListener(IApplicationState applicationState, IShapeList shapeList) {
         this.applicationState = applicationState;
+        this.shapeList = shapeList;
     }
 
     @Override
@@ -23,7 +26,7 @@ public class MouseEventListener implements MouseListener {
     @Override
     public void mouseReleased(MouseEvent e) {
         this.applicationState.setEndingCoordinatePoint(new Point(e.getX(), e.getY()));
-        CreateShapeCommand command = new CreateShapeCommand(this.applicationState);
+        CreateShapeCommand command = new CreateShapeCommand(this.applicationState, this.shapeList);
         command.run();
     }
 

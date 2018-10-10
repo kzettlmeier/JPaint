@@ -19,13 +19,13 @@ public class ShapeList implements IShapeList {
     @Override
     public void addShape(IShape shape) {
         this.shapes.add(shape);
-        this.drawShapeHandler.update();
+        this.drawShapeHandler.update(this);
     }
 
     @Override
     public void removeShape(IShape shape) {
         this.shapes.remove(shape);
-        this.drawShapeHandler.update();
+        this.drawShapeHandler.update(this);
     }
 
     @Override

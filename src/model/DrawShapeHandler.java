@@ -1,20 +1,21 @@
 package model;
 
-import model.interfaces.IApplicationState;
 import model.interfaces.IDrawShapeHandler;
 import model.interfaces.IShape;
+import model.interfaces.IShapeList;
+import view.gui.PaintCanvas;
 
 public class DrawShapeHandler implements IDrawShapeHandler {
-    private final IApplicationState appState;
+    private final PaintCanvas canvas;
 
-    public DrawShapeHandler(IApplicationState appState) {
-        this.appState = appState;
+    public DrawShapeHandler(PaintCanvas canvas) {
+        this.canvas = canvas;
     }
 
     @Override
-    public void update() {
-        for (IShape shape : this.appState.getShapeList().getShapes()) {
-            shape.draw(this.appState.getPaintCanvas());
+    public void update(IShapeList shapeList) {
+        for (IShape shape : shapeList.getShapes()) {
+            shape.draw(this.canvas);
         }
     }
 }

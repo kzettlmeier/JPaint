@@ -20,8 +20,6 @@ public interface IApplicationState {
 
     void resetCurrentCoordinates();
 
-    PaintCanvas getPaintCanvas();
-
     ShapeType getActiveShapeType();
 
     ShapeColor getActivePrimaryColor();
@@ -35,6 +33,4 @@ public interface IApplicationState {
     Point getStartingCoordinatePoint();
 
     Point getEndingCoordinatePoint();
-
-    IShapeList getShapeList();
 }

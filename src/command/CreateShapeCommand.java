@@ -4,12 +4,15 @@ import command.interfaces.IShapeCommand;
 import model.builders.ShapeBuilder;
 import model.interfaces.IApplicationState;
 import model.interfaces.IShape;
+import model.interfaces.IShapeList;
 
 public class CreateShapeCommand implements IShapeCommand {
     private final IApplicationState applicationState;
+    private final IShapeList shapeList;
 
-    public CreateShapeCommand(IApplicationState applicationState) {
+    public CreateShapeCommand(IApplicationState applicationState, IShapeList shapeList) {
         this.applicationState = applicationState;
+        this.shapeList = shapeList;
     }
 
     public void run() {
@@ -21,6 +24,6 @@ public class CreateShapeCommand implements IShapeCommand {
         builder.setStartingPoint(applicationState.getStartingCoordinatePoint());
         builder.setEndingPoint(applicationState.getEndingCoordinatePoint());
         IShape shape = builder.toShape();
-        applicationState.getShapeList().addShape(shape);
+        this.shapeList.addShape(shape);
     }
 }

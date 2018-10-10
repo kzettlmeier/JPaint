@@ -4,8 +4,6 @@ import model.*;
 import model.dialogs.DialogProvider;
 import model.interfaces.IApplicationState;
 import model.interfaces.IDialogProvider;
-import model.interfaces.IShapeList;
-import view.gui.PaintCanvas;
 import view.interfaces.IUiModule;
 
 import java.io.Serializable;
@@ -14,7 +12,6 @@ public class ApplicationState implements IApplicationState, Serializable {
     private static final long serialVersionUID = -5545483996576839007L;
     private final IUiModule uiModule;
     private final IDialogProvider dialogProvider;
-    private final PaintCanvas canvas;
 
     private ShapeType activeShapeType;
     private ShapeColor activePrimaryColor;
@@ -23,12 +20,10 @@ public class ApplicationState implements IApplicationState, Serializable {
     private StartAndEndPointMode activeStartAndEndPointMode;
     private Point startingCoordinatePoint;
     private Point endingCoordinatePoint;
-    private IShapeList shapeList;
 
-    public ApplicationState(IUiModule uiModule, PaintCanvas canvas) {
+    public ApplicationState(IUiModule uiModule) {
         this.uiModule = uiModule;
         this.dialogProvider = new DialogProvider(this);
-        this.canvas = canvas;
         setDefaults();
     }
 
@@ -74,9 +69,6 @@ public class ApplicationState implements IApplicationState, Serializable {
     }
 
     @Override
-    public PaintCanvas getPaintCanvas() { return this.canvas; }
-
-    @Override
     public ShapeType getActiveShapeType() {
         return activeShapeType;
     }
@@ -107,15 +99,11 @@ public class ApplicationState implements IApplicationState, Serializable {
     @Override
     public Point getEndingCoordinatePoint() { return this.endingCoordinatePoint; }
 
-    @Override
-    public IShapeList getShapeList() { return this.shapeList; }
-
     private void setDefaults() {
         activeShapeType = ShapeType.ELLIPSE;
         activePrimaryColor = ShapeColor.BLUE;
         activeSecondaryColor = ShapeColor.GREEN;
         activeShapeShadingType = ShapeShadingType.FILLED_IN;
         activeStartAndEndPointMode = StartAndEndPointMode.DRAW;
-        this.shapeList = new ShapeList(new DrawShapeHandler(this));
     }
 }
