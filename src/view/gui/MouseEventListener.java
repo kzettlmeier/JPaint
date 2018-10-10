@@ -25,7 +25,23 @@ public class MouseEventListener implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        this.applicationState.setEndingCoordinatePoint(new Point(e.getX(), e.getY()));
+        Point startingPoint = this.applicationState.getStartingCoordinatePoint();
+        Point endingPoint = new Point(e.getX(), e.getY());
+
+        if (startingPoint.getX() > endingPoint.getX()) {
+            int oldInt = startingPoint.getX();
+            startingPoint = new Point(endingPoint.getX(), startingPoint.getY());
+            endingPoint = new Point(oldInt, endingPoint.getY());
+        }
+        if (startingPoint.getY() > endingPoint.getY()) {
+            int oldInt = startingPoint.getY();
+            startingPoint = new Point(startingPoint.getX(), endingPoint.getY());
+            endingPoint = new Point(endingPoint.getX(), oldInt);
+        }
+
+        this.applicationState.setStartingCoordinatePoint(startingPoint);
+        this.applicationState.setEndingCoordinatePoint(endingPoint);
+
         CreateShapeCommand command = new CreateShapeCommand(this.applicationState, this.shapeList);
         command.run();
     }
