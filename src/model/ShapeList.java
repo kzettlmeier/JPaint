@@ -17,15 +17,27 @@ public class ShapeList implements IShapeList {
     }
 
     @Override
-    public void addShape(IShape shape) {
+    public void addShape(IShape shape, boolean drawShapes) {
         this.shapes.add(shape);
-        this.drawShapeHandler.update(this);
+        if (drawShapes) {
+            this.drawShapeHandler.update(this);
+        }
     }
 
     @Override
-    public void removeShape(IShape shape) {
+    public void removeShape(IShape shape, boolean drawShapes) {
         this.shapes.remove(shape);
-        this.drawShapeHandler.update(this);
+        if (drawShapes) {
+            this.drawShapeHandler.update(this);
+        }
+    }
+
+    @Override
+    public void removeAllShapes(boolean drawShapes) {
+        this.shapes = new ArrayList<>();
+        if (drawShapes) {
+            this.drawShapeHandler.update(this);
+        }
     }
 
     @Override

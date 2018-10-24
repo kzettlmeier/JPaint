@@ -23,7 +23,8 @@ public class Main {
         IJPaintController controller = new JPaintController(uiModule, appState);
         IDrawShapeHandler drawShapeHandler = new DrawShapeHandler(paintCanvas);
         IShapeList shapeList = new ShapeList(drawShapeHandler);
-        paintCanvas.addMouseListener(new MouseEventListener(appState, shapeList));
+        IShapeList selectedShapes = new ShapeList(drawShapeHandler);
+        paintCanvas.addMouseListener(new MouseEventListener(appState, shapeList, selectedShapes));
         controller.setup();
 
         // For example purposes only; remove from your final project.
