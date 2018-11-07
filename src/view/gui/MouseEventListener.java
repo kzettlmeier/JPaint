@@ -16,6 +16,7 @@ public class MouseEventListener implements MouseListener {
     private final IApplicationState applicationState;
     private final IShapeList shapeList;
     private final IShapeList selectedShapeList;
+    private IShapeCommand command;
 
     public MouseEventListener(IApplicationState applicationState, IShapeList shapeList, IShapeList selectedShapes) {
         this.applicationState = applicationState;
@@ -25,6 +26,15 @@ public class MouseEventListener implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        StartAndEndPointMode mode = applicationState.getActiveStartAndEndPointMode();
+        if (mode.equals(StartAndEndPointMode.DRAW)) {
+            command = new CreateShapeCommand(this.applicationState, this.shapeList);
+        } else if (mode.equals(StartAndEndPointMode.SELECT)) {
+            command = new SelectShapeCommand(this.applicationState, this.shapeList, this.selectedShapeList);
+        } else {
+            command = new MoveShapeCommand(this.applicationState, this.shapeList, this.selectedShapeList);
+        }
+
         this.applicationState.resetCurrentCoordinates();
         this.applicationState.setStartingCoordinatePoint(new Point(e.getX(), e.getY()));
     }
@@ -52,14 +62,6 @@ public class MouseEventListener implements MouseListener {
         this.applicationState.setStartingCoordinatePoint(startingPoint);
         this.applicationState.setEndingCoordinatePoint(endingPoint);
 
-        IShapeCommand command = null;
-        if (mode.equals(StartAndEndPointMode.DRAW)) {
-            command = new CreateShapeCommand(this.applicationState, this.shapeList);
-        } else if (mode.equals(StartAndEndPointMode.SELECT)) {
-            command = new SelectShapeCommand(this.applicationState, this.shapeList, this.selectedShapeList);
-        } else {
-            command = new MoveShapeCommand(this.applicationState, this.shapeList, this.selectedShapeList);
-        }
         command.run();
     }
 
