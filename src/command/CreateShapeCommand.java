@@ -25,5 +25,6 @@ public class CreateShapeCommand implements IShapeCommand {
         builder.setEndingPoint(applicationState.getEndingCoordinatePoint());
         IShape shape = builder.toShape();
         this.shapeList.addShape(shape, true);
+        CommandHistory.add(this.shapeList);
     }
 }

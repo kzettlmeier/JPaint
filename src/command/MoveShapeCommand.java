@@ -60,5 +60,6 @@ public class MoveShapeCommand implements IShapeCommand {
             this.drawnShapes.removeShape(deleteShape, true);
             this.drawnShapes.addShape(addShape, true);
         }
+        CommandHistory.add(this.drawnShapes);
     }
 }

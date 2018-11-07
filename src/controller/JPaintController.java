@@ -1,5 +1,6 @@
 package controller;
 
+import command.CommandHistory;
 import command.CopyShapesCommand;
 import command.DeleteShapesCommand;
 import command.PasteShapesCommand;
@@ -37,5 +38,7 @@ public class JPaintController implements IJPaintController {
         uiModule.addEvent(EventName.COPY, () -> new CopyShapesCommand(this.selectedShapes, this.copiedShapes).run());
         uiModule.addEvent(EventName.PASTE, () -> new PasteShapesCommand(this.drawnShapes, this.copiedShapes).run());
         uiModule.addEvent(EventName.DELETE, () -> new DeleteShapesCommand(this.drawnShapes, this.selectedShapes).run());
+        uiModule.addEvent(EventName.UNDO, () -> CommandHistory.undo(this.drawnShapes));
+        uiModule.addEvent(EventName.REDO, () -> CommandHistory.redo(this.drawnShapes));
     }
 }

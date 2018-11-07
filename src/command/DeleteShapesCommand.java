@@ -18,5 +18,6 @@ public class DeleteShapesCommand implements IShapeCommand {
         for (IShape selectedShape : this.selectedShapes.getShapes()) {
             this.drawnShapes.removeShape(selectedShape, true);
         }
+        CommandHistory.add(this.drawnShapes);
     }
 }
