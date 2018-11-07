@@ -31,6 +31,7 @@ public class PasteShapesCommand implements IShapeCommand {
             shapeBuilder.setEndingPoint(newEndingPoint);
 
             this.drawnShapes.addShape(shapeBuilder.toShape(), true);
+            CommandHistory.add(this.drawnShapes);
         }
     }
 }
